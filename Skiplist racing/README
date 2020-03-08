@@ -1,0 +1,201 @@
+Copyright[2019] <Livadaru Alexandru-Valentin 313CA>					
+
+TEMA1
+
+			SKIPLIST
+	
+	STRUCTURA NOD SKIPLIST:
+
+	-Nodul meu din skiplist va stoca ID-ul unui jucator precum si
+punctajele lui(informatia).
+
+	-De asemenea va contine patru pointeri pe directiile:inainte,inapoi
+la stanga si la dreapta.
+
+	-Am doi constructori: priul il folosesc in operatia de insert,iar al
+doilea il folosesc cand vreau sa creez o copie a head-ului,tail-ului etc.
+	
+	-La crearea unui nod el nu pointeaza spre nimic.
+
+	-Destructorul meu este gol,deoarece nu am nevoie sa eliberez memorie.
+
+	IMPLEMENTARE SKIPLIST:
+
+	-Mi-am creat variabila block_height care retine inaltimea skiplistului,
+doua noduri ce reprezinta capatul si sfarsitul skiplistului(head si tail) precum
+si constanta care o voi folosi la functia flipcoin(0.5 pt a mima aruncarea
+unei monede).
+
+	-In constructor am creat head-ul si tail-ul,carora le-am atribuit valori
+mai mari cu intentia de a le face sa mimeze plus si minus infinit. Apoi le-am
+legat intre ele.
+
+	-In destructor am creat o copie a head-ului si un aux pentru a ma putea
+plimba prin skiplist si a sterge ce am nevoie.
+
+	-Cu ajutorul lui aux ma plimb de la stanga la dreapta si sterg toata
+linia.
+
+	-Apoi il mut pe head pe aceasi pozitie cu vertical pentru a putea repeta
+procesul.
+
+	FLIPCOIN	
+
+	-Flipcoin mimeaza aruncarea unei monede. Daca randomize e sub 0.5,vom
+mai crea un nivel. Tot asa pana cand probabilitatea va fi mai are de 0.5 .
+	
+	SEARCH
+
+	-Am creat o copie a head-ului si a tail-ului pentru a ma plimba
+in skiplist.
+
+	-Ne plimbam spre dreapta in cautarea ID-ului pe care il vrem si daca
+ajungem la capat sau valoarea urmatoare e mai mai mare decat ce cautam coboram
+un nivel cu copiile si tot asa. La sfarsit vom returna un pointer la elementul
+cautat de pe ultimul nivel.
+	
+	SEARCH2	
+
+	-Face acelasi lucru precum SEARCH,doar ca imi returneaza punctajele
+concurentului de la acel nod.
+
+	SEARCH3
+	
+	-Face acelasi lucru precum SEARCH,doar ca imi returneaza ID-ul concurentului
+de la acel nod.
+	
+	ADD_LAYER
+
+	-Functie care imi va mai adauga un strat de "infinituri in caz ca
+inaltimea coloanei unui element nou introdus va depasi inaltimea de pana atunci
+a skiplistului.
+
+	-In principiu creez doua noduri pe care le leg de celelalte,in final
+ele devenind head si tail.
+
+	INSERT
+
+	-Ne luam un pointer care pointeaza la casuta cu valoarea cea mai
+aproiata de valoarea cautata. Introducem elementul nou pe ultimul nivel si-i
+facem legaturile. Apoi in functie de rezultatulfunctiei flipcoin mai cream nivele
+sau nu,nivelel create fiind si ele legatela randul lor.
+
+	-Apoi,cat timp ce se afla in sus e NULL,mergem in stanga pana gasim o
+coloana cu cel putin doua nivele. Urcam pe ea si legam nivelul suprior din coloana
+noului element de nodurile din stanga si drapta.
+
+	-Si tot asa pana cand flipcoinul se va opri.
+
+
+	DELETE
+	
+	-Ne pozitionam pe nodul cautat,la baza coloanei lui. Cream o copie
+a elementului,facem elementul in sine sa pointeze mai sus si sterg copia.
+
+	-Astfel urc pe coloana si elimin toate elementele.
+
+	PRINT
+
+	-In momentul de fata nu are niciun rol in rezorvarea problemei,dar m-a
+ajutat enorm cand am implementat skiplistul si problema in sine. Asa ca am
+lasat-o acolo.
+
+	-Ce face ea? In principiu parcurge lista de la stanga la dreapta si
+afiseaza toate elementele,apoi mi-am luat un pointer care retine coloana de sub
+head si mai jos.
+
+	-Astfel pot parcurge toata lista. Parcurgerea e asemanatoare cu cea din
+destructorul skiplistului.
+
+		PLAYER.H
+	
+	CLASA PLAYER
+
+	-Aici tin punctajele concurentilor(Score) si ID-ul lor.
+
+	-Constructorul meu initializeaza scorul lor cu 0.
+
+	-Apoi am facut o serie de getteri si setteri deoarce aveam campuile din
+clasa private.
+
+	-SortByPoints e un al treilea parametru pentru sort-ul din main.L-am
+creat pentru a implementa regulile de punctare a problemei.
+
+	CLASA DETAILS
+
+	-Aici tin ultima pozitie din cursa,ID-ul concurentilor si timpul.
+	
+	-Am de asemenea o serie de getteri si setteri deoarce am campurile private.
+
+	-SortByTimer e un al treilea parametru pentru sort-ul din main.L-am
+creat pentru a implementa regulile de punctare a problemei.
+
+		PROBLEMA IN SINE
+
+	SWAP_ORDER
+
+	-E o simpla functie de sotare pe care am folosit-o sa sortez timpul
+si ulterior punctajele.
+
+	TITLE_RACE
+
+	-Deschidem fisierele de intrare si iesire.
+
+	-Initializam campurile setLastPos si setID din details la 0 respectiv
+ID-urile de la 1 la i + 1.
+
+	-De asemenea prevPrint va fi initializat la 0.Vom stoca ultima poz la print.
+
+	-Apoi luam un string si verificam daca e egal cu print.
+
+	-Daca este cautam in skiplist punctajele si ID-urile si le punem in
+order respectiv IDorder pentru a le sorta.
+
+	-Astfel punctajele vor fi sortate,iar ID-urile lor vor face match cu
+punctajele lor.
+
+	-Apoi afisam id-urile,punctajele si diferenta de nivel dintre printuri.
+
+	-Daca stringul nu e egal cu print,convertim strigul la inturi,pastrand
+timpii in vectorul times,in acelasi timp setand si timpul si ID-urile in vectorul
+de clase details.
+
+	-Sortam timpiisi Id-urile pentru a putea pune punctajele in ordinea buna.
+
+	-Numaraum concurentii cu timpul diferit de 0pentru a vedea cati participa
+la cursa respectiva.
+
+	-Setam ID-ul celor care nu au participat la cursa,apoi le pastram scorul
+de la ultima cursa la care au participat.
+
+	-Apoi,daca setam ID-ulcelor care au participat la cursa.
+	
+	-Stocam intr-o variabila scorul vechi si il adunam la cel nou pentru
+a forma newscore.
+
+	-Apoi inseram punctajele in skiplist.
+
+	-Sortez punctajele pentru afla pozitia curenta in clasament.
+
+	-Si setez last position la pozitia pe care concurentii se aflau la
+ultima cursa
+
+	-La final eliberam memoria alocata dinamic.
+
+	MAIN
+
+	-In main tot ce am facut a fost sa chem srand pentru coinflip si de
+asemena sa apelez functia principala title_race().
+
+	ALTE ADAUGARI
+
+	-Am incercat sa fac totul cat mai concis si cat mai clar.
+
+	-In caz ca lipseste ceva din README,cometariile din cod ar trebui sa
+lamureasca orice dubiu.
+
+	-Mentionez ca pentru skiplist m-am inspirat de pe internet(si aici ma
+refer doar la idei) si NU am copiat cod de pe internet.
+
+	-Sper ca a fost totul clar si in final vreau sa-ti multumesc pentru
+timpul aordat citirii temei mele,sa ai o zi frumoasa! :) 
